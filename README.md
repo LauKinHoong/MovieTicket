@@ -25,9 +25,11 @@ npm i react-native-screens
 # Modify this file index.js with the follow codes:
 
 import {AppRegistry} from 'react-native';
+#
 import App from './src/App';
+#
 import {name as appName} from './app.json';
-
+#
 AppRegistry.registerComponent(appName, () => App);
 
 # Add all these files into the reactnative folder, under a new folder name 'src'
