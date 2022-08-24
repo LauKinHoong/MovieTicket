@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# MovieTicketSystem
+# MovieTicket
 
 # Installation
 
@@ -9,7 +8,7 @@ npm i react-native-imaged-carousel-card
 #
 npm i @react-navigation/native
 #
-npm i react-native-vector-icons
+npm i react-native-vector-icons/Ionicons
 #
 npm i @react-navigation/bottom-tabs 
 #
@@ -26,12 +25,11 @@ npm i react-native-screens
 # Modify this file index.js with the follow codes:
 
 import {AppRegistry} from 'react-native';
+#
 import App from './src/App';
+#
 import {name as appName} from './app.json';
-
+#
 AppRegistry.registerComponent(appName, () => App);
-=======
-# MovieTicket
 
 # Add all these files into the reactnative folder, under a new folder name 'src'
->>>>>>> 37fd9e0f00538b12e7b4ef9cdb2b67cf693cc92a
