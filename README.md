@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MovieTicketSystem
 
 # Installation
@@ -29,3 +30,8 @@ import App from './src/App';
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);
+=======
+# MovieTicket
+
+# Add all these files into the reactnative folder, under a new folder name 'src'
+>>>>>>> 37fd9e0f00538b12e7b4ef9cdb2b67cf693cc92a
