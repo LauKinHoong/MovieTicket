@@ -1,31 +1,35 @@
-import HomeScreen from './Screens/HomeScreen';
-import ChickenScreen from './Screens/ChickenScreen';
-import AnimalScreen from './Screens/AnimalScreen';
-import CowScreen from './Screens/CowScreen';
-import PigScreen from './Screens/PigScreen';
-import ProfileScreen from './Screens/ProfileScreen';
-import TrolleyScreen from './Screens/TrolleyScreen';
-import ConfirmScreen from './Screens/ConfirmScreen';
-import ChildStackNavigator from './Screens/ChildStackNavigator';
-import { Text, StyleSheet } from 'react-native';
+/* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+
+import { Text, StyleSheet, View, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
+
+import HomePage from './HomePage';
+import Movies from './Movies';
+import ContactUsPage from './ContactUsPage';
+import ProfileScreen from './Screens/ProfileScreen';
+import ChildStackNavigator from './Screens/ChildStackNavigator';
 
 
-const StackNav = createStackNavigator();
 const Tab = createBottomTabNavigator();
 let SQLite = require('react-native-sqlite-storage');
+const RouteMapper = (route, navigator) => {
+  if (route.name == 'Movies') {
+    return <Movies navigator={navigator} />;
+  }
+};
 
 export default class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.db = SQLite.openDatabase(
-        { name: 'movieHistory', createFromLocation: '~db.sqlite' },
-        this.openCallback,
-        this.errorCallback,
+      { name: 'movieHistory', createFromLocation: '~db.sqlite' },
+      this.openCallback,
+      this.errorCallback,
     );
   }
   componentDidMount() {
@@ -56,40 +60,36 @@ export default class App extends Component {
         },
       );
     });
-
   }
-  _insert() {
-    this.db.transaction(tx => {
-        tx.executeSql('INSERT INTO trolley(userId, movieId, name, date, time, ticket, price) VALUES(1, 2, "Frozen", "03 August 2019", "9:34pm", 3, 16)');
-    });
-}
+
   render() {
     return (
-
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName={'Home'}
+          initialRouteName={'Main'}
           screenOptions={{
             tabBarActiveTintColor: '#e91e63',
             tabBarActiveBackgroundColor: 'pink',
+            // inactiveBackgroundColor: 'white',
             tabBarLabelStyle: {
               fontSize: 22,
             },
             tabBarStyle: {
               backgroundColor: 'lightgrey',
-              borderRadius: 50
+              borderRadius: 30
             },
           }}
         >
           <Tab.Screen
             name="Home"
-            component={HomeScreen}
+            component={HomePage}
             options={{
               tabBarIcon: () => {
                 return <Ionicons name="home" size={20} color={'red'} />;
               },
             }}
           />
+
           <Tab.Screen
             name="Trolley"
             component={ChildStackNavigator}
@@ -100,19 +100,23 @@ export default class App extends Component {
               unmountOnBlur: true
             }}
           />
+
           <Tab.Screen
             name="Profile"
             component={ProfileScreen}
             options={{
               tabBarIcon: () => {
-                return <Ionicons name="person" size={20} color={'blue'} />;
+                return <Ionicons name="person" size={20} color={'green'} />;
               },
               unmountOnBlur: true
             }}
-
           />
+
         </Tab.Navigator>
+
       </NavigationContainer>
+
+
     );
   }
 }
