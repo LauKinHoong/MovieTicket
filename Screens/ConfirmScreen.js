@@ -22,16 +22,16 @@ export default class ConfirmScreen extends Component {
     }
     _insert() {
         this.db.transaction(tx => {
-            tx.executeSql('INSERT INTO movieHistory(userId, movieId, name, date, time, ticket, price) VALUES(?,?,?,?,?,?,?)',
-                [this.state.movies.userId, this.state.movies.movieId, this.state.movies.name, this.state.movies.date, this.state.movies.time, this.state.movies.ticket, this.state.movies.price])
+            tx.executeSql('INSERT INTO movieHistory(email, movieId, name, date, time, ticket, price) VALUES(?,?,?,?,?,?,?)',
+                [this.state.movies.email, this.state.movies.movieId, this.state.movies.name, this.state.movies.date, this.state.movies.time, this.state.movies.ticket, this.state.movies.price])
         });
         console.log("Insert done");
     }
     _deleteRow() {
         this.db.transaction(tx =>
-            tx.executeSql('DELETE FROM trolley WHERE id=(?)', [this.state.movies.id])
+            tx.executeSql('DELETE FROM trolley WHERE email=(?)', [this.state.movies.email]
+            ),
         );
-        console.log([this.state.movies.id]);
     }
 
     render() {
