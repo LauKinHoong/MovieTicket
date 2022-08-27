@@ -29,14 +29,8 @@ export default class ProfileScreen extends Component {
     }
     _query() {
         this.db.transaction(tx =>
-            tx.executeSql('SELECT * FROM movieHistory WHERE userId = (?)', [this.state.user.email], (tx, results) =>
+            tx.executeSql('SELECT * FROM movieHistory WHERE email = (?)', [this.state.user.email], (tx, results) =>
                 this.setState({ movies: results.rows.raw() }),
-            ),
-        );
-    }
-    _insert() {
-        this.db.transaction(tx =>
-            tx.executeSql(' WHERE userId = (?)', [1]
             ),
         );
     }
