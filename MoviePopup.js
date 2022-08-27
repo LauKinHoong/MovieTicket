@@ -15,7 +15,7 @@ import {
 import { defaultStyles } from './styles';
 import Options from './Options';
 
-
+let SQLite = require('react-native-sqlite-storage');
 // Get screen dimensions
 const { width, height } = Dimensions.get('window');
 // Set default popup height to 67% of screen height
