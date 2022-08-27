@@ -21,7 +21,7 @@ export default class TrolleyScreen extends Component {
                 price: 0,
                 ticket: 0,
             },
-            userId: 1, //default userId of a profile, replace this if other profile is used.
+            email: 'johndoe@gmail.com', //default email of a profile, replace this if other profile is used.
             empty: true,
         }
         this._query = this._query.bind(this);
@@ -39,7 +39,7 @@ export default class TrolleyScreen extends Component {
 
     _query() {
         this.db.transaction(tx =>
-            tx.executeSql('SELECT * FROM trolley WHERE userId = (?)', [this.state.userId],
+            tx.executeSql('SELECT * FROM trolley WHERE email = (?)', [this.state.email],
                 (tx, results) => {
                     if (results.rows.length != 0) {
                         this.setState({
@@ -51,9 +51,8 @@ export default class TrolleyScreen extends Component {
                             movies: this.state.temp
                         });
                     }
-                    if (this.state.movies.ticket > 0)
-                    {
-                        this.setState({empty: false})
+                    if (this.state.movies.ticket > 0) {
+                        this.setState({ empty: false })
                     }
                 },
             ),
@@ -61,7 +60,7 @@ export default class TrolleyScreen extends Component {
     }
     _deleteRow() {
         this.db.transaction(tx =>
-            tx.executeSql('DELETE FROM trolley WHERE userId=(?)', [this.state.userId]
+            tx.executeSql('DELETE FROM trolley WHERE email=(?)', [this.state.email]
             ),
         );
     }
@@ -88,7 +87,7 @@ export default class TrolleyScreen extends Component {
                 <View style={styles.controlContainer}>
                     <View style={styles.controlClearContainer}>
                         <TouchableOpacity
-                        disabled={this.state.empty}
+                            disabled={this.state.empty}
                             onPress={() => {
                                 this._deleteRow()
                                 this.props.navigation.push('Trolley')
