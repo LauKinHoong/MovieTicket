@@ -10,13 +10,13 @@ LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
 import HomePage from './HomePage';
 import Movies from './Movies';
-import ContactUsPage from './ContactUsPage';
+//copy from this (1)
 import ProfileScreen from './Screens/ProfileScreen';
 import ChildStackNavigator from './Screens/ChildStackNavigator';
-
+// to this (1)
 
 const Tab = createBottomTabNavigator();
-let SQLite = require('react-native-sqlite-storage');
+let SQLite = require('react-native-sqlite-storage'); //Copy this (2)
 const RouteMapper = (route, navigator) => {
   if (route.name == 'Movies') {
     return <Movies navigator={navigator} />;
@@ -24,6 +24,7 @@ const RouteMapper = (route, navigator) => {
 };
 
 export default class App extends Component {
+  //Copy from this (3)
   constructor(props) {
     super(props)
     this.db = SQLite.openDatabase(
@@ -61,7 +62,7 @@ export default class App extends Component {
       );
     });
   }
-
+  //to this (3)
   render() {
     return (
       <NavigationContainer>
@@ -89,31 +90,29 @@ export default class App extends Component {
               },
             }}
           />
-
-          <Tab.Screen
+          
+          <Tab.Screen //Copy this tab
             name="Trolley"
             component={ChildStackNavigator}
             options={{
               tabBarIcon: () => {
                 return <Ionicons name="basket" size={20} color={'blue'} />;
               },
-              unmountOnBlur: true
+              unmountOnBlur: true //this is important
             }}
           />
 
-          <Tab.Screen
+          <Tab.Screen //Copy this tab
             name="Profile"
             component={ProfileScreen}
             options={{
               tabBarIcon: () => {
                 return <Ionicons name="person" size={20} color={'green'} />;
               },
-              unmountOnBlur: true
+              unmountOnBlur: true //this is important
             }}
           />
-
         </Tab.Navigator>
-
       </NavigationContainer>
 
 
