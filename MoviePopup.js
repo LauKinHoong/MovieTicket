@@ -211,6 +211,26 @@ export default class MoviePopup extends Component {
             } : {},
         };
     }
+    constructor(props) {
+        super(props)
+        this.state = {
+          user: {
+            email: 'johndoe@gmail.com', //change this code to get the profile's id
+          },
+          movie: [],
+        }
+        this.db = SQLite.openDatabase(
+          { name: 'movieHistory', createFromLocation: '~db.sqlite' },
+          this.openCallback,
+          this.errorCallback,
+        );
+      }
+      openCallback() {
+        console.log('database open success');
+      }
+      errorCallback(err) {
+        console.log('Error in opening the database: ' + err);
+      }
     _insert() {
         this.db.transaction(tx => {
             tx.executeSql('INSERT INTO trolley(email, movieId, name, date, time, ticket, price) VALUES(?,?,?,?,?,?,?)',
