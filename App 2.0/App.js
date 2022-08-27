@@ -8,8 +8,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
-import HomePage from './HomePage';
-import Movies from './Movies';
+import HomePage from './Screens/HomeScreen';
+//import Movies from './Movies';
+
 //copy from this (1)
 import ProfileScreen from './Screens/ProfileScreen';
 import ChildStackNavigator from './Screens/ChildStackNavigator';
@@ -34,14 +35,21 @@ export default class App extends Component {
     );
   }
   componentDidMount() {
-    //insert data into the database to test run it.
-    //this._insert();
+    this._droptable();
     this._databasePrepare();
+  }
+  _droptable() {
+    this.db.transaction(tx =>
+      tx.executeSql('DROP TABLE trolley'),
+    );
+    this.db.transaction(tx =>
+      tx.executeSql('DROP TABLE movieHistory'),
+    );
   }
   _databasePrepare() {
     this.db.transaction(tx => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS trolley(id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, movieId INTEGER, name VARCHAR(30), date VARCHAR(20), time VARCHAR(20), ticket INTEGER, price INTEGER)',
+        'CREATE TABLE IF NOT EXISTS trolley(id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR(30), movieId INTEGER, name VARCHAR(30), date VARCHAR(20), time VARCHAR(20), ticket INTEGER, price INTEGER)',
         [],
         (sqlTxn, res) => {
           console.log('trolley table ready');
@@ -51,7 +59,7 @@ export default class App extends Component {
         },
       );
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS movieHistory(id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, movieId INTEGER, name VARCHAR(30), date VARCHAR(20), time VARCHAR(20), ticket INTEGER, price INTEGER)',
+        'CREATE TABLE IF NOT EXISTS movieHistory(id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR(30), movieId INTEGER, name VARCHAR(30), date VARCHAR(20), time VARCHAR(20), ticket INTEGER, price INTEGER)',
         [],
         (sqlTxn, res) => {
           console.log('movieHistory table ready');
@@ -90,7 +98,7 @@ export default class App extends Component {
               },
             }}
           />
-          
+
           <Tab.Screen //Copy this tab
             name="Trolley"
             component={ChildStackNavigator}
@@ -112,10 +120,9 @@ export default class App extends Component {
               unmountOnBlur: true //this is important
             }}
           />
+
         </Tab.Navigator>
       </NavigationContainer>
-
-
     );
   }
 }
